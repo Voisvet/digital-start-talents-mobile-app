@@ -1,21 +1,23 @@
 import {makeAutoObservable} from 'mobx';
+import axios from 'axios';
+import {TAGS_URL} from './urls';
 
 export class RegistrationStore {
   interestsHints: string[] = [];
 
-  phone: string | null = null;
-  code: string | null = null;
+  token: string | null = null;
   goal: string | null = null;
   tasks: string[] | null = null;
   interests: string[] | null = null;
+
+  timer: NodeJS.Timeout | null = null;
 
   constructor() {
     makeAutoObservable(this);
   }
 
-  setAuthData(phone: string, code: string): void {
-    this.phone = phone;
-    this.code = code;
+  setAuthData(token: string): void {
+    this.token = token;
   }
 
   setGoal(goal: string): void {
@@ -31,17 +33,25 @@ export class RegistrationStore {
   }
 
   loadInterestsHints(request: string): void {
-    if (request) {
-      this.interestsHints = [
-        'test1',
-        'test2',
-        'test3',
-        'test4',
-        'test5',
-        'test6',
-        'test7',
-      ];
+    if (this.timer) {
+      clearTimeout(this.timer);
+      this.timer = null;
     }
+    if (request) {
+      this.timer = setTimeout(() => {
+        axios
+          .get<{tags: string[]}>(TAGS_URL, {params: {tag: request}})
+          .then((response) => this.setInterestHints(response.data.tags));
+      }, 1000);
+    } else {
+      axios
+        .get<{tags: string[]}>(TAGS_URL)
+        .then((response) => this.setInterestHints(response.data.tags));
+    }
+  }
+
+  setInterestHints(hints: string[]): void {
+    this.interestsHints = hints;
   }
 }
 

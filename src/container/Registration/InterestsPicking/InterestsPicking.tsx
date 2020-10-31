@@ -3,11 +3,30 @@ import {observer} from 'mobx-react';
 import {StyleSheet, View} from 'react-native';
 import {registrationStore} from '../../../store/Registration.store';
 import {useNavigation} from '@react-navigation/native';
-import {Tag} from '../../../component/Tag';
 import {Image, Text} from 'react-native-elements';
 import {Button} from '../../../component/Button';
 import {SearchInput} from '../../../component/SearchInput';
-import {InterestsList} from '../../../component/InterestsList';
+import {Interest, InterestsList} from '../../../component/InterestsList';
+import axios from 'axios';
+import {TAGS_URL} from '../../../store/urls';
+
+const getInterests = (
+  listedInterests: string[],
+  selectedInterests: string[],
+): Interest[] => {
+  const ignoreList: string[] = [];
+  const interests: Interest[] = listedInterests.map((interest) => {
+    const isSelected = selectedInterests.includes(interest);
+    if (isSelected) {
+      ignoreList.push(interest);
+    }
+    return {interest, isSelected};
+  });
+  selectedInterests
+    .filter((int) => !ignoreList.includes(int))
+    .forEach((interest) => interests.push({interest, isSelected: true}));
+  return interests;
+};
 
 export const InterestsPicking = observer(() => {
   const navigation = useNavigation();
@@ -15,7 +34,7 @@ export const InterestsPicking = observer(() => {
   const [searchRequest, setSearchRequest] = useState<string>('');
 
   useEffect(() => {
-    registrationStore.loadInterestsHints('test');
+    registrationStore.loadInterestsHints('');
   }, []);
 
   const toggleInterest = useCallback(
@@ -28,6 +47,22 @@ export const InterestsPicking = observer(() => {
     },
     [setInterests, interests],
   );
+
+  const searchInterests = useCallback(
+    (interest: string) => {
+      setSearchRequest(interest);
+      registrationStore.loadInterestsHints(interest);
+    },
+    [setSearchRequest],
+  );
+
+  const saveInterest = useCallback(() => {
+    if (!registrationStore.interestsHints.length) {
+      axios
+        .post(TAGS_URL, {tag: searchRequest})
+        .then(() => toggleInterest(searchRequest));
+    }
+  }, [searchRequest, toggleInterest, registrationStore.interestsHints]);
 
   const submit = useCallback(() => {
     registrationStore.setInterests(interests);
@@ -43,15 +78,13 @@ export const InterestsPicking = observer(() => {
         <SearchInput
           containerStyles={styles.searchInput}
           placeholder={'Поиск'}
-          onChangeText={(text) => setSearchRequest(text)}
+          onChangeText={(text) => searchInterests(text)}
+          onEndEditing={() => saveInterest()}
           defaultValue={searchRequest}
         />
         <InterestsList
           containerStyles={styles.tagsContainer}
-          interests={registrationStore.interestsHints.map((int) => ({
-            interest: int,
-            isSelected: interests.includes(int),
-          }))}
+          interests={getInterests(registrationStore.interestsHints, interests)}
           onInterestSelect={(interest) => toggleInterest(interest.interest)}
         />
         <Button title={'Далее'} onPress={submit} />

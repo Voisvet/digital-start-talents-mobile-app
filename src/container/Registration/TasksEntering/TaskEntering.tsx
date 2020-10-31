@@ -2,9 +2,12 @@ import React, {useCallback, useState} from 'react';
 import {observer} from 'mobx-react';
 import {StyleSheet, View} from 'react-native';
 import {authStore} from '../../../store/Auth.store';
-import {CheckBox, Image, Input, Text} from 'react-native-elements';
+import {Image, Input, Text} from 'react-native-elements';
 import {Button} from '../../../component/Button';
-import { Task, TasksList } from '../../../component/TasksList';
+import {Task, TasksList} from '../../../component/TasksList';
+import {registrationStore} from '../../../store/Registration.store';
+import axios from 'axios';
+import {GOAL_URL, INTERESTS_URL, TASKS_URL} from '../../../store/urls';
 
 export const TaskEntering = observer(() => {
   const [task, setTask] = useState('');
@@ -18,11 +21,37 @@ export const TaskEntering = observer(() => {
         isCompleted: false,
       },
     ]);
+    setTask('');
   }, [tasks, setTasks, task]);
 
   const submit = useCallback(() => {
-    authStore.setToken('test');
-  }, []);
+    registrationStore.setTasks(tasks.map((task) => task.task));
+    axios
+      .post(
+        INTERESTS_URL,
+        {interests: registrationStore.interests},
+        {headers: {Authorization: `Bearer ${registrationStore.token}`}},
+      )
+      .then(() =>
+        axios.post(
+          GOAL_URL,
+          {goal: registrationStore.goal},
+          {headers: {Authorization: `Bearer ${registrationStore.token}`}},
+        ),
+      )
+      .then(() =>
+        Promise.all(
+          registrationStore.tasks!.map((text, order) =>
+            axios.post(
+              TASKS_URL,
+              {text, order},
+              {headers: {Authorization: `Bearer ${registrationStore.token}`}},
+            ),
+          ),
+        ),
+      )
+      .then(() => authStore.setToken(registrationStore.token!));
+  }, [tasks]);
 
   return (
     <View style={styles.container}>

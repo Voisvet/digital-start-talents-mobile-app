@@ -5,14 +5,28 @@ import {Image, Input, Text} from 'react-native-elements';
 import {registrationStore} from '../../../store/Registration.store';
 import {useNavigation} from '@react-navigation/native';
 import {Button} from '../../../component/Button';
+import axios from 'axios';
+import { LOGIN_URL } from "../../../store/urls";
+import { authStore } from "../../../store/Auth.store";
 
 export const PhoneSignup = observer(() => {
   const navigation = useNavigation();
   const [phone, setPhone] = useState('');
   const [code, setCode] = useState('');
   const submit = useCallback(() => {
-    registrationStore.setAuthData(phone, code);
-    navigation.navigate('ProfOrientingTest');
+    axios
+      .post<{token: string; register: boolean}>(LOGIN_URL, {
+        phone_number: phone,
+        account_id: code,
+      })
+      .then((response) => {
+        if (response.data.register) {
+          registrationStore.setAuthData(response.data.token);
+          navigation.navigate('ProfOrientingTest');
+        } else {
+          authStore.setToken(response.data.token);
+        }
+      });
   }, [phone, code, navigation]);
 
   return (
@@ -30,6 +44,7 @@ export const PhoneSignup = observer(() => {
         label={'Номер телефона'}
         onChangeText={(text) => setPhone(text)}
         defaultValue={phone}
+        keyboardType={'phone-pad'}
       />
       <Input
         containerStyle={styles.input}
@@ -37,6 +52,7 @@ export const PhoneSignup = observer(() => {
         label={'ID'}
         onChangeText={(text) => setCode(text)}
         defaultValue={code}
+        keyboardType={'number-pad'}
       />
       <Button
         title={'Войти'}
