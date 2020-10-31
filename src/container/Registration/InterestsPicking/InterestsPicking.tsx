@@ -7,6 +7,7 @@ import {Tag} from '../../../component/Tag';
 import {Image, Text} from 'react-native-elements';
 import {Button} from '../../../component/Button';
 import {SearchInput} from '../../../component/SearchInput';
+import {InterestsList} from '../../../component/InterestsList';
 
 export const InterestsPicking = observer(() => {
   const navigation = useNavigation();
@@ -45,17 +46,14 @@ export const InterestsPicking = observer(() => {
           onChangeText={(text) => setSearchRequest(text)}
           defaultValue={searchRequest}
         />
-        <View style={styles.tagsContainer}>
-          {registrationStore.interestsHints.map((hint) => (
-            <View style={styles.tag} key={hint}>
-              <Tag
-                title={hint}
-                onPress={() => toggleInterest(hint)}
-                isActive={interests.includes(hint)}
-              />
-            </View>
-          ))}
-        </View>
+        <InterestsList
+          containerStyles={styles.tagsContainer}
+          interests={registrationStore.interestsHints.map((int) => ({
+            interest: int,
+            isSelected: interests.includes(int),
+          }))}
+          onInterestSelect={(interest) => toggleInterest(interest.interest)}
+        />
         <Button title={'Далее'} onPress={submit} />
       </View>
       <Image
@@ -88,9 +86,6 @@ const styles = StyleSheet.create({
     marginBottom: 32,
   },
   tagsContainer: {
-    flexDirection: 'row',
-    flexWrap: 'wrap',
-    justifyContent: 'flex-start',
     marginLeft: 32,
     marginRight: 32,
     marginBottom: 32,

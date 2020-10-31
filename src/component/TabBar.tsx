@@ -69,6 +69,11 @@ export const TabBar = ({state, descriptors, navigation}: BottomTabBarProps) => {
 
 const styles = StyleSheet.create({
   container: {
+    position: 'absolute',
+    bottom: 12,
+    right: 12,
+    left: 12,
+    borderRadius: 20,
     flexDirection: 'row',
     justifyContent: 'space-around',
     alignItems: 'center',
@@ -77,12 +82,12 @@ const styles = StyleSheet.create({
     shadowColor: '#000',
     shadowOffset: {
       width: 0,
-      height: -5,
+      height: 4,
     },
-    shadowOpacity: 0.34,
-    shadowRadius: 6.27,
+    shadowOpacity: 0.32,
+    shadowRadius: 5.46,
 
-    elevation: 10,
+    elevation: 9,
   },
   menuItem: {
     flexDirection: 'column',
@@ -94,8 +99,8 @@ const styles = StyleSheet.create({
     fontWeight: '400',
   },
   iconContainer: {
-    width: 32,
-    height: 32,
+    width: 16,
+    height: 16,
     justifyContent: 'center',
     alignItems: 'center',
   },

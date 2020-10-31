@@ -4,13 +4,20 @@ import {StyleSheet, View} from 'react-native';
 import {authStore} from '../../../store/Auth.store';
 import {CheckBox, Image, Input, Text} from 'react-native-elements';
 import {Button} from '../../../component/Button';
+import { Task, TasksList } from '../../../component/TasksList';
 
 export const TaskEntering = observer(() => {
   const [task, setTask] = useState('');
-  const [tasks, setTasks] = useState<string[]>([]);
+  const [tasks, setTasks] = useState<Task[]>([]);
 
   const addTask = useCallback(() => {
-    setTasks([...tasks, task]);
+    setTasks([
+      ...tasks,
+      {
+        task,
+        isCompleted: false,
+      },
+    ]);
   }, [tasks, setTasks, task]);
 
   const submit = useCallback(() => {
@@ -30,16 +37,7 @@ export const TaskEntering = observer(() => {
           onEndEditing={() => addTask()}
           defaultValue={task}
         />
-        {tasks.map((aTask) => (
-          <CheckBox
-            key={aTask}
-            title={aTask}
-            checked={false}
-            containerStyle={styles.checkbox}
-            textStyle={styles.checkboxText}
-            size={33}
-          />
-        ))}
+        <TasksList tasks={tasks} />
         <Button
           containerStyle={styles.button}
           title={'Далее'}
@@ -80,14 +78,6 @@ const styles = StyleSheet.create({
   },
   input: {
     width: 250,
-  },
-  checkbox: {
-    borderWidth: 0,
-    backgroundColor: 'transparent',
-    width: 290,
-  },
-  checkboxText: {
-    fontWeight: '400',
-    fontSize: 18,
+    marginBottom: 16,
   },
 });

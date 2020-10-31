@@ -45,7 +45,6 @@ const styles = StyleSheet.create({
     paddingBottom: 4,
     paddingRight: 16,
     paddingLeft: 16,
-    minWidth: 90,
   },
   containerStyles: {
     // shadowColor: '#000',

@@ -1,5 +1,5 @@
 import React from 'react';
-import {Image} from 'react-native';
+import { Image, StyleSheet } from 'react-native';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import {createStackNavigator} from '@react-navigation/stack';
 import {Profile} from '../Profile/Profile';
@@ -28,7 +28,12 @@ export const UserRoot = () => {
                 title: 'Главная',
                 tabBarIcon: (props) => (
                   <Image
-                    source={require('../../../assets/profile_focused.png')}
+                    style={styles.icon}
+                    source={
+                      props.focused
+                        ? require('../../../assets/profile_focused.png')
+                        : require('../../../assets/profile.png')
+                    }
                   />
                 ),
               }}
@@ -39,7 +44,14 @@ export const UserRoot = () => {
               options={{
                 title: 'Возможности',
                 tabBarIcon: (props) => (
-                  <Image source={require('../../../assets/possibility.png')} />
+                  <Image
+                    style={styles.icon}
+                    source={
+                      props.focused
+                        ? require('../../../assets/possibility_focused.png')
+                        : require('../../../assets/possibility.png')
+                    }
+                  />
                 ),
               }}
             />
@@ -49,7 +61,14 @@ export const UserRoot = () => {
               options={{
                 title: 'Бонусы',
                 tabBarIcon: (props) => (
-                  <Image source={require('../../../assets/bonus.png')} />
+                  <Image
+                    style={styles.icon}
+                    source={
+                      props.focused
+                        ? require('../../../assets/bonus_focused.png')
+                        : require('../../../assets/bonus.png')
+                    }
+                  />
                 ),
               }}
             />
@@ -65,3 +84,10 @@ export const UserRoot = () => {
     </Stack.Navigator>
   );
 };
+
+const styles = StyleSheet.create({
+  icon: {
+    width: 16,
+    height: 16,
+  }
+})
