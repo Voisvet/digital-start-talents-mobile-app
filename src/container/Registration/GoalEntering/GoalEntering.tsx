@@ -1,8 +1,10 @@
 import React, {useCallback, useState} from 'react';
 import {observer} from 'mobx-react';
-import {Button, Text, TextInput, View} from 'react-native';
+import {StyleSheet, View} from 'react-native';
 import {registrationStore} from '../../../store/Registration.store';
 import {useNavigation} from '@react-navigation/native';
+import {Image, Input, Text} from 'react-native-elements';
+import {Button} from '../../../component/Button';
 
 export const GoalEntering = observer(() => {
   const navigation = useNavigation();
@@ -13,14 +15,57 @@ export const GoalEntering = observer(() => {
   }, [goal, navigation]);
 
   return (
-    <View>
-      <Text>Вход</Text>
-      <TextInput
-        placeholder="Task"
-        onChangeText={(text) => setGoal(text)}
-        defaultValue={goal}
+    <View style={styles.container}>
+      <View style={styles.controlsContainer}>
+        <Text h2 h2Style={styles.title}>
+          Поставь цель
+        </Text>
+        <Input
+          containerStyle={styles.input}
+          placeholder={'Добавить цель...'}
+          onChangeText={(text) => setGoal(text)}
+          defaultValue={goal}
+          multiline={true}
+        />
+        <Button
+          containerStyle={styles.button}
+          title={'Далее'}
+          onPress={submit}
+        />
+      </View>
+      <Image
+        source={require('../../../assets/fox-face.png')}
+        containerStyle={styles.image}
       />
-      <Button title={'Продолжить'} onPress={submit} />
     </View>
   );
+});
+
+const styles = StyleSheet.create({
+  container: {
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    flexGrow: 1,
+    backgroundColor: '#ffffff',
+  },
+  controlsContainer: {
+    alignItems: 'center',
+  },
+  image: {
+    marginBottom: 40,
+    height: 152,
+    width: 209,
+  },
+  button: {
+    marginTop: 32,
+  },
+  title: {
+    fontSize: 24,
+    fontWeight: '400',
+    marginTop: 16,
+    marginBottom: 32,
+  },
+  input: {
+    width: 250,
+  },
 });
