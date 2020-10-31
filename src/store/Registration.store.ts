@@ -32,7 +32,15 @@ export class RegistrationStore {
 
   loadInterestsHints(request: string): void {
     if (request) {
-      this.interestsHints = ['test1', 'test2', 'test3', 'test4'];
+      this.interestsHints = [
+        'test1',
+        'test2',
+        'test3',
+        'test4',
+        'test5',
+        'test6',
+        'test7',
+      ];
     }
   }
 }

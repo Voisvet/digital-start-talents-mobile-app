@@ -11,11 +11,31 @@ const Stack = createStackNavigator();
 export const RegistrationRoot = () => {
   return (
     <Stack.Navigator>
-      <Stack.Screen name={'Signup'} component={PhoneSignup} />
-      <Stack.Screen name={'ProfOrientingTest'} component={ProfOrientingTest} />
-      <Stack.Screen name={'InterestsPicking'} component={InterestsPicking} />
-      <Stack.Screen name={'GoalEntering'} component={GoalEntering} />
-      <Stack.Screen name={'TaskEntering'} component={TaskEntering} />
+      <Stack.Screen
+        name={'Signup'}
+        component={PhoneSignup}
+        options={{headerShown: false}}
+      />
+      <Stack.Screen
+        name={'ProfOrientingTest'}
+        component={ProfOrientingTest}
+        options={{headerShown: false}}
+      />
+      <Stack.Screen
+        name={'InterestsPicking'}
+        component={InterestsPicking}
+        options={{headerShown: false}}
+      />
+      <Stack.Screen
+        name={'GoalEntering'}
+        component={GoalEntering}
+        options={{headerShown: false}}
+      />
+      <Stack.Screen
+        name={'TaskEntering'}
+        component={TaskEntering}
+        options={{headerShown: false}}
+      />
     </Stack.Navigator>
   );
 };
