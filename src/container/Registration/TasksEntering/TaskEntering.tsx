@@ -1,7 +1,7 @@
 import React, {useCallback, useState} from 'react';
 import {observer} from 'mobx-react';
 import {StyleSheet, View} from 'react-native';
-import {authStore} from '../../../store/Auth.store';
+import {profileStore} from '../../../store/Profile.store';
 import {Image, Input, Text} from 'react-native-elements';
 import {Button} from '../../../component/Button';
 import {Task, TasksList} from '../../../component/TasksList';
@@ -17,15 +17,15 @@ export const TaskEntering = observer(() => {
     setTasks([
       ...tasks,
       {
-        task,
-        isCompleted: false,
+        text: task,
+        done: false,
       },
     ]);
     setTask('');
   }, [tasks, setTasks, task]);
 
   const submit = useCallback(() => {
-    registrationStore.setTasks(tasks.map((task) => task.task));
+    registrationStore.setTasks(tasks.map((task) => task.text));
     axios
       .post(
         INTERESTS_URL,
@@ -50,7 +50,7 @@ export const TaskEntering = observer(() => {
           ),
         ),
       )
-      .then(() => authStore.setToken(registrationStore.token!));
+      .then(() => profileStore.setToken(registrationStore.token!));
   }, [tasks]);
 
   return (

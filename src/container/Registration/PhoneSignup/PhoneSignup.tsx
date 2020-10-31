@@ -7,7 +7,7 @@ import {useNavigation} from '@react-navigation/native';
 import {Button} from '../../../component/Button';
 import axios from 'axios';
 import { LOGIN_URL } from "../../../store/urls";
-import { authStore } from "../../../store/Auth.store";
+import { profileStore } from "../../../store/Profile.store";
 
 export const PhoneSignup = observer(() => {
   const navigation = useNavigation();
@@ -24,7 +24,7 @@ export const PhoneSignup = observer(() => {
           registrationStore.setAuthData(response.data.token);
           navigation.navigate('ProfOrientingTest');
         } else {
-          authStore.setToken(response.data.token);
+          profileStore.setToken(response.data.token);
         }
       });
   }, [phone, code, navigation]);

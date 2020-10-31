@@ -3,8 +3,9 @@ import {CheckBox} from 'react-native-elements';
 import {StyleProp, StyleSheet, View, ViewStyle} from 'react-native';
 
 export interface Task {
-  isCompleted: boolean;
-  task: string;
+  done: boolean;
+  text: string;
+  id: number;
 }
 
 interface TasksListProps {
@@ -18,9 +19,9 @@ export const TasksList = (props: TasksListProps) => {
     <View style={props.containerStyles}>
       {props.tasks.map((task) => (
         <CheckBox
-          key={task.task}
-          title={task.task}
-          checked={task.isCompleted}
+          key={task.id}
+          title={task.text}
+          checked={task.done}
           containerStyle={styles.checkbox}
           textStyle={styles.text}
           onPress={() => props.onTaskClick?.(task)}

@@ -13,7 +13,7 @@ import React from 'react';
 import {UserRoot} from './container/User/UserRoot/UserRoot';
 import {RegistrationRoot} from './container/Registration/RegistrationRoot/RegistrationRoot';
 import {observer} from 'mobx-react';
-import {authStore} from './store/Auth.store';
+import {profileStore} from './store/Profile.store';
 import {NavigationContainer} from '@react-navigation/native';
 
 declare const global: {HermesInternal: null | {}};
@@ -21,7 +21,7 @@ declare const global: {HermesInternal: null | {}};
 const App = observer(() => {
   return (
     <NavigationContainer>
-      {authStore.token ? <UserRoot /> : <RegistrationRoot />}
+      {profileStore.token ? <UserRoot /> : <RegistrationRoot />}
     </NavigationContainer>
   );
 });

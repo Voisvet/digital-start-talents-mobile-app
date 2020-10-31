@@ -1,80 +1,52 @@
 import React from 'react';
 import {observer} from 'mobx-react';
 import {useNavigation} from '@react-navigation/native';
-import {Image, ScrollView, StyleSheet, View} from 'react-native';
+import {ScrollView, StyleSheet} from 'react-native';
 import {Text} from 'react-native-elements';
 import {UserInfo} from '../../../component/UserInfo';
 import {Button} from '../../../component/Button';
 import {GoalInfo} from '../../../component/GoalInfo';
 import {TasksList} from '../../../component/TasksList';
 import {InterestsList} from '../../../component/InterestsList';
+import {profileStore} from '../../../store/Profile.store';
 
 export const Profile = observer(() => {
   const navigation = useNavigation();
-  const tasks = [
-    {
-      task: 'Записаться к репетиторам',
-      isCompleted: true,
-    },
-    {
-      task: 'Решить пробники',
-      isCompleted: false,
-    },
-    {
-      task: 'Сдать ЕГЭ',
-      isCompleted: false,
-    },
-    {
-      task: 'Подать документы',
-      isCompleted: false,
-    },
-  ];
-
-  const interests = [
-    {
-      interest: 'Математика',
-      isSelected: false,
-    },
-    {
-      interest: 'Информатика',
-      isSelected: false,
-    },
-    {
-      interest: 'Физика',
-      isSelected: false,
-    },
-    {
-      interest: 'Наука',
-      isSelected: false,
-    },
-    {
-      interest: 'Олимпиады',
-      isSelected: false,
-    },
-  ];
 
   return (
     <ScrollView style={styles.container}>
       <UserInfo
-        name={'Мария Иванова'}
+        name={profileStore.name}
         avatar={require('../../../assets/avatar_example.png')}
-        experience={150}
+        experience={profileStore.points}
       />
       <Button
         title={'Написать эксперту'}
         containerStyle={styles.expertButtonContainer}
       />
       <GoalInfo
-        goal={'Поступить в МФТИ'}
-        tasksAmount={4}
-        tasksCompleted={1}
+        goal={profileStore.goal}
+        tasksAmount={profileStore.tasks.length}
+        tasksCompleted={profileStore.tasks.filter((task) => task.done).length}
         containerStyles={styles.goal}
       />
-      <TasksList containerStyles={styles.tasks} tasks={tasks} />
+      <TasksList
+        containerStyles={styles.tasks}
+        tasks={profileStore.tasks}
+        onTaskClick={(task) =>
+          profileStore.updateTask({...task, done: !task.done})
+        }
+      />
       <Text h3 h3Style={styles.interestsTitle}>
         Интересы
       </Text>
-      <InterestsList interests={interests} containerStyles={styles.interests} />
+      <InterestsList
+        interests={profileStore.interests.map((val) => ({
+          interest: val,
+          isSelected: false,
+        }))}
+        containerStyles={styles.interests}
+      />
     </ScrollView>
   );
 });
