@@ -3,11 +3,11 @@ import {makeAutoObservable} from 'mobx';
 export class RegistrationStore {
   interestsHints: string[] = [];
 
-  phone: string | undefined;
-  code: string | undefined;
-  goal: string | undefined;
-  tasks: string[] | undefined;
-  interests: string[] | undefined;
+  phone: string | null = null;
+  code: string | null = null;
+  goal: string | null = null;
+  tasks: string[] | null = null;
+  interests: string[] | null = null;
 
   constructor() {
     makeAutoObservable(this);

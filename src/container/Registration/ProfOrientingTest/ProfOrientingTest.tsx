@@ -1,12 +1,10 @@
 import React, {useCallback} from 'react';
 import {Button, Text, View} from 'react-native';
-import {StackNavigationProp} from '@react-navigation/stack';
+import {useNavigation} from '@react-navigation/native';
 
-export const ProfOrientingTest = ({
-  navigation,
-}: {
-  navigation: StackNavigationProp<any>;
-}) => {
+export const ProfOrientingTest = () => {
+  const navigation = useNavigation();
+
   const submit = useCallback(() => {
     navigation.navigate('InterestsPicking');
   }, [navigation]);

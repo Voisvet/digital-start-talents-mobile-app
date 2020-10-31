@@ -1,7 +1,7 @@
 import React, {useCallback, useState} from 'react';
 import {observer} from 'mobx-react';
 import {Button, Text, TextInput, View} from 'react-native';
-import {authStore} from '../../store/Auth.store';
+import {authStore} from '../../../store/Auth.store';
 
 export const TaskEntering = observer(() => {
   const [task, setTask] = useState('');

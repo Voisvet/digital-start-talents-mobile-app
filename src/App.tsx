@@ -10,15 +10,20 @@
 
 import 'react-native-gesture-handler';
 import React from 'react';
-import {UserRoot} from './container/UserRoot/UserRoot';
-import {RegistrationRoot} from './container/RegistrationRoot/RegistrationRoot';
+import {UserRoot} from './container/User/UserRoot/UserRoot';
+import {RegistrationRoot} from './container/Registration/RegistrationRoot/RegistrationRoot';
 import {observer} from 'mobx-react';
 import {authStore} from './store/Auth.store';
+import {NavigationContainer} from '@react-navigation/native';
 
 declare const global: {HermesInternal: null | {}};
 
 const App = observer(() => {
-  return authStore.token ? <UserRoot /> : <RegistrationRoot />;
+  return (
+    <NavigationContainer>
+      {authStore.token ? <UserRoot /> : <RegistrationRoot />}
+    </NavigationContainer>
+  );
 });
 
 export default App;
