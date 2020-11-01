@@ -90,7 +90,7 @@ export const InterestsPicking = observer(() => {
         <Button title={'Далее'} onPress={submit} />
       </View>
       <Image
-        source={require('../../../assets/fox-face.png')}
+        source={require('../../../assets/fox_book.png')}
         containerStyle={styles.image}
       />
     </View>
@@ -108,9 +108,8 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   image: {
-    marginBottom: 40,
-    height: 152,
-    width: 209,
+    height: 221,
+    width: 239,
   },
   title: {
     fontSize: 24,

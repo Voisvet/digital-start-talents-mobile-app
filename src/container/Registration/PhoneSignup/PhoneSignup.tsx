@@ -6,8 +6,8 @@ import {registrationStore} from '../../../store/Registration.store';
 import {useNavigation} from '@react-navigation/native';
 import {Button} from '../../../component/Button';
 import axios from 'axios';
-import { LOGIN_URL } from "../../../store/urls";
-import { profileStore } from "../../../store/Profile.store";
+import {LOGIN_URL} from '../../../store/urls';
+import {profileStore} from '../../../store/Profile.store';
 
 export const PhoneSignup = observer(() => {
   const navigation = useNavigation();
@@ -31,11 +31,12 @@ export const PhoneSignup = observer(() => {
 
   return (
     <View style={styles.container}>
-      <Text h1 h1Style={styles.title}>
-        Талантливая молодёжь Тюменской области
-      </Text>
       <Image
-        source={require('../../../assets/fox-face.png')}
+        source={require('../../../assets/title.png')}
+        containerStyle={styles.title}
+      />
+      <Image
+        source={require('../../../assets/fox_login.png')}
         containerStyle={styles.image}
       />
       <Input
@@ -70,16 +71,15 @@ const styles = StyleSheet.create({
     flexGrow: 1,
   },
   title: {
-    textAlign: 'center',
-    fontSize: 36,
-    fontWeight: '400',
-    width: 240,
+    width: 135,
+    height: 120,
+    marginTop: 50,
   },
   image: {
     marginTop: 36,
-    marginBottom: 30,
-    height: 152,
-    width: 209,
+    marginBottom: 38  ,
+    height: 154,
+    width: 171,
   },
   input: {
     width: 250,

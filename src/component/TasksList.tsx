@@ -5,7 +5,7 @@ import {StyleProp, StyleSheet, View, ViewStyle} from 'react-native';
 export interface Task {
   done: boolean;
   text: string;
-  id: number;
+  id?: number;
 }
 
 interface TasksListProps {

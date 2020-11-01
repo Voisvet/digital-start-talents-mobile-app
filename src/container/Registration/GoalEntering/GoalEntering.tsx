@@ -34,7 +34,7 @@ export const GoalEntering = observer(() => {
         />
       </View>
       <Image
-        source={require('../../../assets/fox-face.png')}
+        source={require('../../../assets/fox_goal.png')}
         containerStyle={styles.image}
       />
     </View>
@@ -52,9 +52,8 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   image: {
-    marginBottom: 40,
-    height: 152,
-    width: 209,
+    height: 300,
+    width: 222,
   },
   button: {
     marginTop: 32,
