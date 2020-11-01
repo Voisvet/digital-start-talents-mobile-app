@@ -1,5 +1,5 @@
 import React from 'react';
-import { Image, StyleSheet } from 'react-native';
+import {Image, StyleSheet} from 'react-native';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import {createStackNavigator} from '@react-navigation/stack';
 import {Profile} from '../Profile/Profile';
@@ -75,11 +75,20 @@ export const UserRoot = () => {
           </Tab.Navigator>
         )}
       />
-      <Stack.Screen name={'Mentor'} component={Mentor} />
-      <Stack.Screen name={'BonusDetails'} component={BonusDetails} />
+      <Stack.Screen
+        name={'Mentor'}
+        component={Mentor}
+        options={{headerShown: false}}
+      />
+      <Stack.Screen
+        name={'BonusDetails'}
+        component={BonusDetails}
+        options={{headerShown: false}}
+      />
       <Stack.Screen
         name={'PossibilityDetails'}
         component={PossibilityDetails}
+        options={{headerShown: false}}
       />
     </Stack.Navigator>
   );
@@ -89,5 +98,5 @@ const styles = StyleSheet.create({
   icon: {
     width: 16,
     height: 16,
-  }
-})
+  },
+});

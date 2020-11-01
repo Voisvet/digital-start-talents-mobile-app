@@ -1,7 +1,8 @@
-import {makeAutoObservable} from 'mobx';
+import {makeAutoObservable, reaction} from 'mobx';
 import axios from 'axios';
 import {PROFILE_URL, TASKS_URL} from './urls';
 import {Task} from '../component/TasksList';
+import {foxDialogStore} from './FoxDialog.store';
 
 export enum MentorshipStatus {
   not_enough_points = 'not_enough_points',
@@ -75,3 +76,14 @@ export class ProfileStore {
 }
 
 export const profileStore = new ProfileStore();
+
+reaction(
+  () => profileStore.token,
+  (token) => {
+    if (token) {
+      foxDialogStore.openDialog(
+        'Привет! Рад, что ты снова навестил меня :) Лови 100 ключиков.',
+      );
+    }
+  },
+);

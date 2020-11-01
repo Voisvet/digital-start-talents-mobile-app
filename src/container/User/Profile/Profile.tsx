@@ -23,6 +23,7 @@ export const Profile = observer(() => {
       <Button
         title={'Написать эксперту'}
         containerStyle={styles.expertButtonContainer}
+        onPress={() => navigation.navigate('Mentor')}
       />
       <GoalInfo
         goal={profileStore.goal}

@@ -15,6 +15,8 @@ import {RegistrationRoot} from './container/Registration/RegistrationRoot/Regist
 import {observer} from 'mobx-react';
 import {profileStore} from './store/Profile.store';
 import {NavigationContainer} from '@react-navigation/native';
+import {FoxDialog} from './component/FoxDialog';
+import {foxDialogStore} from './store/FoxDialog.store';
 
 declare const global: {HermesInternal: null | {}};
 
@@ -22,6 +24,12 @@ const App = observer(() => {
   return (
     <NavigationContainer>
       {profileStore.token ? <UserRoot /> : <RegistrationRoot />}
+      {foxDialogStore.message ? (
+        <FoxDialog
+          message={foxDialogStore.message}
+          onClose={() => foxDialogStore.closeDialog()}
+        />
+      ) : null}
     </NavigationContainer>
   );
 });

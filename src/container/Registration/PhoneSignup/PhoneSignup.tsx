@@ -1,7 +1,7 @@
 import React, {useCallback, useState} from 'react';
 import {observer} from 'mobx-react';
 import {StyleSheet, View} from 'react-native';
-import {Image, Input, Text} from 'react-native-elements';
+import {Image, Input} from 'react-native-elements';
 import {registrationStore} from '../../../store/Registration.store';
 import {useNavigation} from '@react-navigation/native';
 import {Button} from '../../../component/Button';
@@ -77,7 +77,7 @@ const styles = StyleSheet.create({
   },
   image: {
     marginTop: 36,
-    marginBottom: 38  ,
+    marginBottom: 38,
     height: 154,
     width: 171,
   },
