@@ -8,7 +8,8 @@ import {Button} from '../../../component/Button';
 import {GoalInfo} from '../../../component/GoalInfo';
 import {TasksList} from '../../../component/TasksList';
 import {InterestsList} from '../../../component/InterestsList';
-import {profileStore} from '../../../store/Profile.store';
+import {MentorshipStatus, profileStore} from '../../../store/Profile.store';
+import {foxDialogStore} from '../../../store/FoxDialog.store';
 
 export const Profile = observer(() => {
   const navigation = useNavigation();
@@ -23,7 +24,17 @@ export const Profile = observer(() => {
       <Button
         title={'Написать эксперту'}
         containerStyle={styles.expertButtonContainer}
-        onPress={() => navigation.navigate('Mentor')}
+        onPress={() => {
+          if (profileStore.mentorship === MentorshipStatus.not_enough_points) {
+            foxDialogStore.openDialog(
+              'Ты ещё недостаточно опытен, собери больше ключей!',
+            );
+          } else if (profileStore.mentorship === MentorshipStatus.waiting) {
+            foxDialogStore.openDialog('Твоя заявка всё ещё обрабатывается.');
+          } else {
+            navigation.navigate('Mentor');
+          }
+        }}
       />
       <GoalInfo
         goal={profileStore.goal}

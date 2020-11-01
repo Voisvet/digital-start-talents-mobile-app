@@ -73,6 +73,10 @@ export class ProfileStore {
     tasksCopy.splice(taskPosition, 1, task);
     this.tasks = tasksCopy;
   }
+
+  setWaitingForMentor(): void {
+    this.mentorship = MentorshipStatus.waiting;
+  }
 }
 
 export const profileStore = new ProfileStore();
